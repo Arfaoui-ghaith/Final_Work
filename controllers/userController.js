@@ -4,34 +4,52 @@ const AppError = require('./../utils/appError');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
    
-        const Users = await User.find();
+        const users = await User.find();
 
-        if(!Users){
+        if(!users){
            return next(new AppError('No Users found.', 404));
         }
     
         res.status(200).json({
             status: 'success',
-            results: Users.length,
+            results: users.length,
             data: {
-                Users
+                users
             }
         });
 
 });
 
+exports.getUsersByName = catchAsync(async (req, res, next) => {
+   
+    const users = await User.find({ name: req.params.name });
+
+    if(!users){
+       return next(new AppError('No Users found with this name : '+req.params.name, 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        results: users.length,
+        data: {
+            users
+        }
+    });
+
+});
+
 exports.getUser = catchAsync(async (req, res, next) => {
    
-        const User = await User.findById(req.params.id).populate('students');
+        const user = await User.findById(req.params.id).populate('students');
 
-        if(!User){
+        if(!user){
            return next(new AppError('No class with this ID.',404));
         }
         
         res.status(200).json({
             status: 'success',
             data: {
-                User
+                user
             }
         });
        

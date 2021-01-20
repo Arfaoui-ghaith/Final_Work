@@ -10,7 +10,10 @@ router.route('/')
 
 router.route('/:id')
     .get(userController.getUser)
-    .patch(userController.updateUser)
+    .put(userController.updateUser)
     .delete(userController.deleteUser);
+
+router.route('/list/:name')
+    .get(userController.getUsersByName)
 
 module.exports = router;
