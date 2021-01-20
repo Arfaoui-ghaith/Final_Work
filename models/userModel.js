@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
             message: 'Passwords are not the same!'
         }
     },
-    passwordChangedAt: Date,
+    date_création: { type: Date, default: Date.now },
 });
 
 // hash the password before save it
